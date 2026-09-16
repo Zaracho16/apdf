@@ -28,7 +28,7 @@ Y también porque me cansé de las aplicaciones de la app store, todas tienen mi
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Zaracho16/apdf.git
 cd apdf
 ```
 
