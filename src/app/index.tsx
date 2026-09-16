@@ -41,16 +41,51 @@ const generarPDF = async () => {
       const base64 = await archivo.base64();
 
       return `
+      <div class="pagina">
         <img
           src="data:image/jpeg;base64,${base64}"
-          style="width: 100%; margin-bottom: 20px;"
         />
+      </div>
       `;
     })
   );
 
   const html = `
     <html>
+      <head>
+        <style>
+          @page {
+            margin: 0;
+          }
+
+          html,
+          body {
+            margin: 0;
+            padding: 0;
+          }
+
+          .pagina {
+            width: 100%;
+            height: 100%;
+            page-break-after: always;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .pagina:last-child ñ{
+            page-break-after: auto;
+          }
+
+          .pagina img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+        </style>
+      </head>
+
       <body>
         ${imagenesHTML.join('')}
       </body>
