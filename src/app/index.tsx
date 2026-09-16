@@ -1,5 +1,8 @@
 
+import { File } from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
+import * as Print from 'expo-print';
+import * as Sharing from 'expo-sharing';
 import { useState } from 'react';
 import {
   Image,
@@ -27,6 +30,42 @@ export default function HomeScreen() {
     }
   };
 
+const generarPDF = async () => {
+  if (imagenes.length === 0) {
+    return;
+  }
+
+  const imagenesHTML = await Promise.all(
+    imagenes.map(async (imagen) => {
+      const archivo = new File(imagen);
+      const base64 = await archivo.base64();
+
+      return `
+        <img
+          src="data:image/jpeg;base64,${base64}"
+          style="width: 100%; margin-bottom: 20px;"
+        />
+      `;
+    })
+  );
+
+  const html = `
+    <html>
+      <body>
+        ${imagenesHTML.join('')}
+      </body>
+    </html>
+  `;
+
+  const resultado = await Print.printToFileAsync({
+    html,
+  });
+
+  console.log('PDF generado:', resultado.uri);
+
+  await Sharing.shareAsync(resultado.uri);
+};
+
   return (
     <View style={styles.container}>
 
@@ -44,6 +83,15 @@ export default function HomeScreen() {
       >
         <Text style={styles.buttonText}>
           Seleccionar imagenes
+        </Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.button}
+        onPress={generarPDF}
+      >
+        <Text style={styles.buttonText}>
+          Generar PDF
         </Text>
       </Pressable>
 
