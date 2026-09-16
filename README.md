@@ -1,56 +1,78 @@
-# Welcome to your Expo app 👋
+# APDF
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+APDF es una aplicación móvil desarrollada con React Native y Expo que permite seleccionar múltiples imágenes y convertirlas en un archivo PDF.
 
-## Get started
+El proyecto fue creado como práctica para aprender desarrollo de aplicaciones móviles utilizando React Native y Expo. 
+Y también porque me cansé de las aplicaciones de la app store, todas tienen mil anuncios.
 
-1. Install dependencies
+## Funcionalidades
 
-   ```bash
-   npm install
-   ```
+* Seleccionar múltiples imágenes desde el dispositivo
+* Visualizar las imágenes seleccionadas
+* Generar un PDF a partir de las imágenes
+* Una imagen por página del PDF
+* Compartir o guardar el PDF generado
 
-2. Start the app
+## Tecnologías
 
-   ```bash
-   npx expo start
-   ```
+* React Native
+* Expo
+* TypeScript
+* Expo Image Picker
+* Expo Print
+* Expo Sharing
+* Expo File System
 
-In the output, you'll find options to open the app in a
+## Cómo ejecutar el proyecto
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 1. Clonar el repositorio
 
 ```bash
-npm run reset-project
+git clone <repository-url>
+cd apdf
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Instalar las dependencias
 
-### Other setup steps
+```bash
+npm install
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+### 3. Iniciar la aplicación
 
-## Learn more
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Luego se puede abrir la aplicación utilizando:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+* **Expo Go** en un dispositivo físico
+* **Emulador de Android**
+* **Simulador de iOS**
 
-## Join the community
+## Estructura del proyecto
 
-Join our community of developers creating universal apps.
+La aplicación utiliza **Expo Router** y navegación basada en archivos.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Las pantallas principales de la aplicación se encuentran dentro de la carpeta `app`.
+
+## Estado actual
+
+APDF se encuentra actualmente en desarrollo.
+
+La primera versión se centra en el flujo básico de selección de imágenes y conversión a PDF. Se irán agregando nuevas funcionalidades a medida que avance el proyecto.
+
+## Mejoras futuras
+
+Próximas mejoras:
+
+* Reordenar las imágenes seleccionadas
+* Eliminar imágenes individualmente
+* Cambiar el nombre de los PDFs generados
+* Mejorar la interfaz de usuario
+* Agregar una vista previa del PDF
+* Agregar opciones adicionales para la generación del PDF
+
+## Autor
+
+Desarrollado como proyecto personal de aprendizaje y portafolio.
