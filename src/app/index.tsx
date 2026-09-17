@@ -38,6 +38,23 @@ export default function HomeScreen() {
     );
   }
 
+  const moverImagen = (index: number, direccion: number) => {
+  const nuevoIndex = index + direccion;
+
+  if (nuevoIndex < 0 || nuevoIndex >= imagenes.length) {
+    return;
+  }
+
+  const nuevasImagenes = [...imagenes];
+
+  [nuevasImagenes[index], nuevasImagenes[nuevoIndex]] = [
+    nuevasImagenes[nuevoIndex],
+    nuevasImagenes[index],
+  ];
+
+  setImagenes(nuevasImagenes);
+};
+
 const generarPDF = async () => {
   if (imagenes.length === 0) {
     return;
@@ -138,25 +155,41 @@ const generarPDF = async () => {
         </Text>
       </Pressable>
 
-      <View style={styles.imageContainer}>
-        {imagenes.map((imagen, index) => (
-          <View key={index} style={styles.imageWrapper}>
-            <Image
-              source={{ uri: imagen }}
-              style={styles.image}
-            />
+<View style={styles.imageContainer}>
+  {imagenes.map((imagen, index) => (
+    <View key={index} style={styles.imageWrapper}>
+      <Image
+        source={{ uri: imagen }}
+        style={styles.image}
+      />
 
-            <Pressable
-              style={styles.deleteButton}
-              onPress={() => eliminarImagenes(index)}
-            >
-              <Text style={styles.deleteButtonText}>
-                ×
-              </Text>
-            </Pressable>
-          </View>
-        ))}
+      <Pressable
+        style={styles.deleteButton}
+        onPress={() => eliminarImagenes(index)}
+      >
+        <Text style={styles.deleteButtonText}>×</Text>
+      </Pressable>
+
+      <View style={styles.moveButtons}>
+        <Pressable
+          style={styles.moveButton}
+          onPress={() => moverImagen(index, -1)}
+          disabled={index === 0}
+        >
+          <Text style={styles.moveButtonText}>↑</Text>
+        </Pressable>
+
+        <Pressable
+          style={styles.moveButton}
+          onPress={() => moverImagen(index, 1)}
+          disabled={index === imagenes.length - 1}
+        >
+          <Text style={styles.moveButtonText}>↓</Text>
+        </Pressable>
       </View>
+    </View>
+  ))}
+</View>
 
     </View>
   );
@@ -227,5 +260,27 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 10,
+  },
+
+  moveButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+    marginTop: 8,
+  },
+
+  moveButton: {
+    width: 35,
+    height: 35,
+    borderRadius: 8,
+    backgroundColor: '#333',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  moveButtonText: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
   },
 });
