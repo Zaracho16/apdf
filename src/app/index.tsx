@@ -30,6 +30,14 @@ export default function HomeScreen() {
     }
   };
 
+  const eliminarImagenes = (indexEliminar: number) => {
+    setImagenes((imagenesActuales) => 
+      imagenesActuales.filter(
+        (_, index) => index != indexEliminar
+      )
+    );
+  }
+
 const generarPDF = async () => {
   if (imagenes.length === 0) {
     return;
@@ -132,11 +140,21 @@ const generarPDF = async () => {
 
       <View style={styles.imageContainer}>
         {imagenes.map((imagen, index) => (
-          <Image
-            key={index}
-            source={{ uri: imagen }}
-            style={styles.image}
-          />
+          <View key={index} style={styles.imageWrapper}>
+            <Image
+              source={{ uri: imagen }}
+              style={styles.image}
+            />
+
+            <Pressable
+              style={styles.deleteButton}
+              onPress={() => eliminarImagenes(index)}
+            >
+              <Text style={styles.deleteButtonText}>
+                ×
+              </Text>
+            </Pressable>
+          </View>
         ))}
       </View>
 
@@ -145,6 +163,28 @@ const generarPDF = async () => {
 }
 
 const styles = StyleSheet.create({
+  imageWrapper: {
+    position: 'relative',
+  },
+
+  deleteButton: {
+    position: 'absolute',
+    top:-8,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  deleteButtonText: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold',
+    lineHeight: 25,
+  },
+
   container: {
     flex: 1,
     justifyContent: 'center',
