@@ -1,5 +1,6 @@
 
 import { File } from 'expo-file-system';
+import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
@@ -65,15 +66,23 @@ const generarPDF = async () => {
 
   const imagenesHTML = await Promise.all(
     imagenes.map(async (imagen) => {
-      const archivo = new File(imagen);
+      
+  const imagenComprimida = await ImageManipulator.manipulateAsync(
+    imagen,
+    [{ resize: { width: 1600 } }],
+    {
+      compress: 0.7,
+      format: ImageManipulator.SaveFormat.JPEG,
+    }
+  );
+
+      const archivo = new File(imagenComprimida.uri);
       const base64 = await archivo.base64();
 
       return `
-      <div class="pagina">
-        <img
-          src="data:image/jpeg;base64,${base64}"
-        />
-      </div>
+        <div class="pagina">
+          <img src="data:image/jpeg;base64,${base64}" />
+        </div>
       `;
     })
   );
