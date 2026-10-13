@@ -4,16 +4,19 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import { useState } from 'react';
+
 import {
   Image,
   Pressable,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 
 export default function HomeScreen() {
   const [imagenes, setImagenes] = useState<string[]>([]);
+  const [nombrePDF, setNombrePDF] = useState('Mi documento');
 
   const seleccionarImagenes = async () => {
     const resultado = await ImagePicker.launchImageLibraryAsync({
@@ -99,7 +102,7 @@ const generarPDF = async () => {
             align-items: center;
           }
 
-          .pagina:last-child ñ{
+          .pagina:last-child {
             page-break-after: auto;
           }
 
@@ -121,9 +124,24 @@ const generarPDF = async () => {
     html,
   });
 
-  console.log('PDF generado:', resultado.uri);
+  const nombreLimpio = nombrePDF
+    .trim()
+    .replace(/[<>:"/\\|?*\u0000-\u001F]/g, '')
+    .replace(/\.pdf$/i, '')
+    .trim();
 
-  await Sharing.shareAsync(resultado.uri);
+  const nombreFinal = nombreLimpio || 'Mi documento';
+
+  const archivoPDF = new File(
+    resultado.uri.substring(0, resultado.uri.lastIndexOf('/') + 1) +
+      `${nombreFinal}.pdf`
+  );
+
+  const archivoOriginal = new File(resultado.uri);
+  await archivoOriginal.copy(archivoPDF);
+  console.log('PDF generado:', archivoPDF.uri);
+
+  await Sharing.shareAsync(archivoPDF.uri);
 };
 
   return (
@@ -136,6 +154,14 @@ const generarPDF = async () => {
       <Text style={styles.subtitle}>
         Convierte tus imagenes en PDF
       </Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder='Nombre del pdf'
+        value={nombrePDF}
+        onChangeText={setNombrePDF}
+        maxLength={80}
+      />
 
       <Pressable
         style={styles.button}
@@ -283,4 +309,16 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
   },
+
+  input: {
+    width: '100%',
+    maxWidth: 320,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    padding: 12,
+    fontSize: 16,
+    marginBottom: 20,
+  }
+
 });
